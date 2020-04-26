@@ -1,11 +1,12 @@
 var id;
+var canDraw = false;
 var socket;
 socket = io.connect();
 
 socket.on("connect", () => (id = socket.id));
 
 socket.on("player-list", newPlayerList);
-socket.on("guess-word", guessWord);
+socket.on("new-turn", newTurn);
 socket.on("counter", updateCountDown);
 
 function newPlayerList(playerList) {
@@ -20,13 +21,15 @@ function newPlayerList(playerList) {
   );
 }
 
-function guessWord({ drawerid, word }) {
+function newTurn({ drawerid, word }) {
   if (drawerid === id) {
+    canDraw = true;
     const wordToGuessElement = document.getElementById("word-to-guess");
     wordToGuessElement.textContent = word;
     wordToGuessElement.classList.remove("guess-word");
     wordToGuessElement.classList.add("draw-word");
   } else {
+    canDraw = false;
     const wordToGuessElement = document.getElementById("word-to-guess");
 
     let wordSections = word.split(" ");
@@ -44,6 +47,9 @@ function guessWord({ drawerid, word }) {
 }
 
 function updateCountDown({timeLeft, totalTime}) {
+  if (timeLeft <= 0) {
+    canDraw = true;
+  }
   $(".progress-bar").css("width", (timeLeft/totalTime)*100 + "%");
 }
 

@@ -3,7 +3,13 @@ function setup() {
   background("#F2F2F2");
   frameRate(100);
   canvas.parent("sketch-holder");
+
   socket.on("mouse", newDrawing);
+  socket.on("new-turn", newTurn);
+}
+
+function newTurn() {
+  clear();
 }
 
 function newDrawing(data) {
@@ -12,11 +18,13 @@ function newDrawing(data) {
 }
 
 function mouseDragged() {
-  const data = { px: pmouseX, py: pmouseY, x: mouseX, y: mouseY };
-  socket.emit("mouse", data);
+  if (canDraw === true) {
+    const data = { px: pmouseX, py: pmouseY, x: mouseX, y: mouseY };
+    socket.emit("mouse", data);
 
-  stroke(0);
-  if (mouseIsPressed) {
-    line(mouseX, mouseY, pmouseX, pmouseY);
+    stroke(0);
+    if (mouseIsPressed) {
+      line(mouseX, mouseY, pmouseX, pmouseY);
+    }
   }
 }

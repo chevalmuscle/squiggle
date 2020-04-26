@@ -34,7 +34,7 @@ function playerListUpdate(playerList) {
 }
 
 function turnUpdate(drawerid, word, turnLength) {
-  io.in(room).emit("guess-word", { drawerid, word });
+  io.in(room).emit("new-turn", { drawerid, word });
 
   let timeLeft = turnLength
   var turnCountDown = setInterval(function(){
