@@ -46,11 +46,11 @@ function newTurn({ drawerid, word }) {
   }
 }
 
-function updateCountDown({timeLeft, totalTime}) {
+function updateCountDown({ timeLeft, totalTime }) {
   if (timeLeft <= 0) {
     canDraw = true;
   }
-  $(".progress-bar").css("width", (timeLeft/totalTime)*100 + "%");
+  $(".progress-bar").css("width", (timeLeft / totalTime) * 100 + "%");
 }
 
 function generatePlayerElement(playerid, playerName, playerScore) {
