@@ -2,9 +2,8 @@ function setup() {
   var canvas = createCanvas(500, 400);
   background("#F2F2F2");
   frameRate(100);
-  canvas.parent('sketch-holder');
-  socket = io.connect();
-  socket.on("mouse", newDrawing)
+  canvas.parent("sketch-holder");
+  socket.on("mouse", newDrawing);
 }
 
 function newDrawing(data) {
@@ -13,13 +12,11 @@ function newDrawing(data) {
 }
 
 function mouseDragged() {
-  
   const data = { px: pmouseX, py: pmouseY, x: mouseX, y: mouseY };
-  socket.emit("mouse", data)
+  socket.emit("mouse", data);
 
   stroke(0);
   if (mouseIsPressed) {
     line(mouseX, mouseY, pmouseX, pmouseY);
   }
 }
-
