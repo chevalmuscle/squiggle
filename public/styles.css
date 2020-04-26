@@ -1,0 +1,39 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+#game {
+  height: 400px;
+}
+
+.sidebar {
+  width: 236px;
+  height: 400px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: #E0E0E0;
+}
+.players {
+  overflow:hidden;
+}
+
+.player-name {
+  float: left;
+  width: 200px;
+}
+
+.player-score {
+  float: right;
+  text-align: end;
+  width: 36px;
+}
+
+li {
+  list-style-type: none;
+}
+
+#sketch-holder {
+  margin-left: 236px;
+}
