@@ -2,6 +2,27 @@
 <html>
   <head>
     <link rel="stylesheet" href="styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+      integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+      integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+      integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+      crossorigin="anonymous"
+    ></script>
     <script src="lib/p5.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
     <script src="game.js"></script>
@@ -12,15 +33,26 @@
       <div class="sidebar">
         <h2 class="room-name">Awesome Room</h2>
         <ol id="player-list">
-          <li class="player"><span class="player-name">Chevalmusclé</span><span class="player-score">400</span></li>
-          <li class="player"><span class="player-name">Jared Banks</span><span class="player-score">380</span></li>
-          <li class="player"><span class="player-name">Justin Sider</span><span class="player-score">200</span></li>
-          <li class="player"><span class="player-name">Captain Daddy</span><span class="player-score">10</span></li>
+          <li class="player">
+            <span class="player-name"></span><span class="player-score"></span>
+          </li>
         </ol>
+      </div>
+      <div class="progress">
+        <div
+          class="progress-bar progress-bar-striped bg-success"
+          role="progressbar"
+          aria-valuemin="0"
+          aria-valuemax="100"
+          style="width: 100%;"
+        >
+          <span class="sr-only"></span>
+        </div>
       </div>
       <div id="sketch-holder">
         <!-- p5.js sketch -->
       </div>
+      <div id="word-to-guess"></div>
     </div>
   </body>
 </html>

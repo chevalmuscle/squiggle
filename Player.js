@@ -1,5 +1,6 @@
 module.exports = class Player {
-  constructor(name) {
+  constructor(id, name) {
+    this.id = id;
     this.name = name;
     this.score = 0;
   }

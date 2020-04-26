@@ -20,6 +20,10 @@
   overflow:hidden;
 }
 
+.is-current-user {
+  color: blue;
+}
+
 .player-name {
   float: left;
   width: 200px;
@@ -37,4 +41,28 @@ li {
 
 #sketch-holder {
   margin-left: 236px;
+}
+
+#word-to-guess {
+  position: absolute;
+  font-size: 1.2em;
+  margin-left: 236px;
+  top: 25px;
+  width: 500px;
+  text-align: center;
+}
+
+.draw-word {
+  color: green;
+}
+
+.guess-word {
+  color: red;
+}
+
+.progress {
+  position: absolute;
+  width: 498px;
+  margin-left: 236px;
+  border-radius: 0px !important;
 }

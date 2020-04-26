@@ -1,4 +1,4 @@
-module.exports = playerListUpdate;
+module.exports = { playerListUpdate, turnUpdate };
 
 const express = require("express");
 const socket = require("socket.io");
@@ -20,7 +20,7 @@ function newConnection(socket) {
   socket.join(room);
   console.log(`new connection: ${socket.id}`);
 
-  game.addPlayer(socket.id);
+  game.addPlayer(socket.id, socket.id);
 
   socket.on("mouse", mouseMsg);
   function mouseMsg(data) {
@@ -30,4 +30,8 @@ function newConnection(socket) {
 
 function playerListUpdate(playerList) {
   io.in(room).emit("player-list", playerList);
+}
+
+function turnUpdate(drawerid, word, timeToGuess) {
+  io.in(room).emit("guess-word", { drawerid, word, timeToGuess });
 }
