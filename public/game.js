@@ -1,5 +1,6 @@
 var id;
 var canDraw = false;
+var wordToGuess = "";
 var socket;
 socket = io.connect();
 
@@ -30,6 +31,7 @@ function newPlayerList(playerList) {
  * @param {object} { drawerid: id of the player that is drawing, word: word that is being drawn }
  */
 function newTurn({ drawerid, word }) {
+  this.wordToGuess = word;
   if (drawerid === id) {
     canDraw = true;
     const wordToGuessElement = document.getElementById("word-to-guess");
@@ -56,12 +58,15 @@ function newTurn({ drawerid, word }) {
 
 /**
  * Fired when an update to the countdown is sent
- * Also resets the canDraw variable to true at the end of the countdown
+ * When the countdown is over:
+ *     - resets the canDraw variable to true so that all users can draw
+ *     - shows the word that needed to be guessed
  * @param {object} { timeLeft: time remaining to the countdown, totalTime: initial time of the countdown } 
  */
 function updateCountDown({ timeLeft, totalTime }) {
   if (timeLeft <= 0) {
     canDraw = true;
+    document.getElementById("word-to-guess").textContent = this.wordToGuess;
   }
   $(".progress-bar").css("width", (timeLeft / totalTime) * 100 + "%");
 }
