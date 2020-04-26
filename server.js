@@ -7,9 +7,10 @@ const game = require("./game");
 const app = express();
 const room = 1;
 
-const server = app.listen(3000, function() {
+const port = process.env.PORT || 3000;
+const server = app.listen(port, function() {
   app.use(express.static("public"));
-  console.log("http://localhost:3000 🐷");
+  console.log(`http://localhost:${port} 🐷`);
 });
 
 const io = socket(server);
