@@ -15,7 +15,8 @@
   left: 0;
   background-color: #E0E0E0;
 }
-.players {
+
+#player-list {
   overflow:hidden;
 }
 
