@@ -27,6 +27,11 @@ function newConnection(socket) {
   function mouseMsg(data) {
     socket.broadcast.to(room).emit("mouse", data);
   }
+
+  socket.on("disconnect", () => {
+    console.log(`${socket.id} disconnected`);
+    game.removePlayer(socket.id);
+  });
 }
 
 function playerListUpdate(playerList) {
