@@ -1,6 +1,7 @@
+const backgroundColor = "#F2F2F2"
 function setup() {
   var canvas = createCanvas(500, 400);
-  background("#F2F2F2");
+  background(backgroundColor);
   frameRate(100);
   canvas.parent("sketch-holder");
 
@@ -10,6 +11,7 @@ function setup() {
 
 function newTurn() {
   clear();
+  background(backgroundColor);
 }
 
 /**
