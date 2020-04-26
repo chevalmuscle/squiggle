@@ -12,6 +12,10 @@ function newTurn() {
   clear();
 }
 
+/**
+ * Fired when the server sends backs a line to draw on the canvas
+ * @param {*} data line to draw on the canvas
+ */
 function newDrawing(data) {
   stroke(0);
   line(data.x, data.y, data.px, data.py);

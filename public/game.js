@@ -9,6 +9,10 @@ socket.on("player-list", newPlayerList);
 socket.on("new-turn", newTurn);
 socket.on("counter", updateCountDown);
 
+/**
+ *
+ * @param {Array} playerList List of the players playing the game. See Player.js for the object
+ */
 function newPlayerList(playerList) {
   const playerListElement = document.getElementById("player-list");
   playerListElement.innerHTML = "";
@@ -21,6 +25,10 @@ function newPlayerList(playerList) {
   );
 }
 
+/**
+ * Fired when a new turn is starting
+ * @param {object} { drawerid: id of the player that is drawing, word: word that is being drawn }
+ */
 function newTurn({ drawerid, word }) {
   if (drawerid === id) {
     canDraw = true;
@@ -46,6 +54,11 @@ function newTurn({ drawerid, word }) {
   }
 }
 
+/**
+ * Fired when an update to the countdown is sent
+ * Also resets the canDraw variable to true at the end of the countdown
+ * @param {object} { timeLeft: time remaining to the countdown, totalTime: initial time of the countdown } 
+ */
 function updateCountDown({ timeLeft, totalTime }) {
   if (timeLeft <= 0) {
     canDraw = true;
@@ -53,6 +66,12 @@ function updateCountDown({ timeLeft, totalTime }) {
   $(".progress-bar").css("width", (timeLeft / totalTime) * 100 + "%");
 }
 
+/**
+ * Generate a document element for a player. Contains the name of the player and its score.
+ * @param {string} playerid id of the player
+ * @param {string} playerName name of the player
+ * @param {number} playerScore player's score
+ */
 function generatePlayerElement(playerid, playerName, playerScore) {
   const playerElement = document.createElement("li");
   playerElement.className = "player";
