@@ -33,6 +33,15 @@ function playerListUpdate(playerList) {
   io.in(room).emit("player-list", playerList);
 }
 
-function turnUpdate(drawerid, word, timeToGuess) {
-  io.in(room).emit("guess-word", { drawerid, word, timeToGuess });
+function turnUpdate(drawerid, word, turnLength) {
+  io.in(room).emit("guess-word", { drawerid, word });
+
+  let timeLeft = turnLength
+  var turnCountDown = setInterval(function(){
+    io.in(room).emit('counter', {timeLeft: timeLeft, totalTime: turnLength});
+    timeLeft -= 1000
+    if (timeLeft < 0) {
+      clearInterval(turnCountDown);
+    }
+  }, 1000);
 }

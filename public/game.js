@@ -6,6 +6,7 @@ socket.on("connect", () => (id = socket.id));
 
 socket.on("player-list", newPlayerList);
 socket.on("guess-word", guessWord);
+socket.on("counter", updateCountDown);
 
 function newPlayerList(playerList) {
   const playerListElement = document.getElementById("player-list");
@@ -19,7 +20,7 @@ function newPlayerList(playerList) {
   );
 }
 
-function guessWord({ drawerid, word, timeToGuess }) {
+function guessWord({ drawerid, word }) {
   if (drawerid === id) {
     const wordToGuessElement = document.getElementById("word-to-guess");
     wordToGuessElement.textContent = word;
@@ -40,8 +41,10 @@ function guessWord({ drawerid, word, timeToGuess }) {
     wordToGuessElement.classList.remove("draw-word");
     wordToGuessElement.classList.add("guess-word");
   }
+}
 
-  createProgressbar(timeToGuess);
+function updateCountDown({timeLeft, totalTime}) {
+  $(".progress-bar").css("width", (timeLeft/totalTime)*100 + "%");
 }
 
 function generatePlayerElement(playerid, playerName, playerScore) {
@@ -62,20 +65,4 @@ function generatePlayerElement(playerid, playerName, playerScore) {
 
   playerElement.append(playerNameElement, playerScoreElement);
   return playerElement;
-}
-
-/**
- *
- * @param {number} duration duration in ms of the countdown progressbar
- */
-function createProgressbar(duration) {
-  let i = 100;
-  const counterBack = setInterval(function() {
-    i--;
-    if (i >= 0) {
-      $(".progress-bar").css("width", i + "%");
-    } else {
-      clearInterval(counterBack);
-    }
-  }, duration / 100);
 }

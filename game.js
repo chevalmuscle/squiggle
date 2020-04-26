@@ -29,5 +29,7 @@ function getRandomWord() {
 
 // auto plays turn 
 setInterval(function() {
-  playTurn();
+  if(players.length > 0) {
+    playTurn();
+  }
 }, turnLength + timeBetweenTurns);
