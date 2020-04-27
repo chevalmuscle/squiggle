@@ -23,6 +23,7 @@
       integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
       crossorigin="anonymous"
     ></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="lib/p5.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
     <script src="game.js"></script>
@@ -37,6 +38,21 @@
             <span class="player-name"></span><span class="player-score"></span>
           </li>
         </ol>
+
+        <div id="chatbox">
+          <ul id="chat-messages">
+            <li class="message-in-chat">
+              <span class="chatter-name"></span><span></span>
+            </li>
+          </ul>
+          <form id="chat-input-form" action="">
+            <input id="chat-input" autocomplete="off" /><button
+              id="send-button"
+            >
+              Send
+            </button>
+          </form>
+        </div>
       </div>
       <div class="progress">
         <div

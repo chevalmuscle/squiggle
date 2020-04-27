@@ -28,6 +28,11 @@ function newConnection(socket) {
     socket.broadcast.to(room).emit("mouse", data);
   }
 
+  socket.on("chat-message", ({ socketid, msg }) => {
+    const playerName = game.getPlayerName(socketid);
+    io.in(room).emit("chat-message", { playerName, msg });
+  });
+
   socket.on("disconnect", () => {
     console.log(`${socket.id} disconnected`);
     game.removePlayer(socket.id);
