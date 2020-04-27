@@ -3,6 +3,7 @@ module.exports = class Player {
     this.id = id;
     this.name = name;
     this.score = 0;
+    this.hasFoundWord = false;
   }
 
   addScore(scoreToAdd) {
