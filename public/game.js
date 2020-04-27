@@ -10,6 +10,23 @@ socket.on("player-list", newPlayerList);
 socket.on("new-turn", newTurn);
 socket.on("counter", updateCountDown);
 
+socket.on("chat-message", function({ playerName, msg }) {
+  const messageElement = document.createElement("li");
+  messageElement.className = "message-in-chat";
+  messageElement.innerHTML = `<span class="chatter-name">${playerName}: </span><span>${msg}</span></li>`;
+  $("#chat-messages").append(messageElement);
+  $("#chat-messages").scrollTop($("#chat-messages").height());
+});
+
+window.onload = function() {
+  $("#chat-input-form").submit(function(e) {
+    e.preventDefault();
+    socket.emit("chat-message", { socketid: id, msg: $("#chat-input").val() });
+    $("#chat-input").val("");
+    return false;
+  });
+};
+
 /**
  *
  * @param {Array} playerList List of the players playing the game. See Player.js for the object
@@ -61,7 +78,7 @@ function newTurn({ drawerid, word }) {
  * When the countdown is over:
  *     - resets the canDraw variable to true so that all users can draw
  *     - shows the word that needed to be guessed
- * @param {object} { timeLeft: time remaining to the countdown, totalTime: initial time of the countdown } 
+ * @param {object} { timeLeft: time remaining to the countdown, totalTime: initial time of the countdown }
  */
 function updateCountDown({ timeLeft, totalTime }) {
   if (timeLeft <= 0) {

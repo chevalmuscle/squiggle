@@ -27,6 +27,11 @@ function newConnection(socket) {
   function mouseMsg(data) {
     socket.broadcast.to(room).emit("mouse", data);
   }
+
+  socket.on("chat-message", ({ socketid, msg }) => {
+    const playerName = game.getPlayerName(socketid);
+    io.in(room).emit("chat-message", { playerName, msg });
+  });
 }
 
 function playerListUpdate(playerList) {
