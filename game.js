@@ -6,7 +6,7 @@ const words = ["apples and oranges", "banana", "cat", "flash mcqueen"];
 const turnLength = 10000; // in ms
 const timeBetweenTurns = 5000; // in ms
 
-module.exports = { addPlayer, getPlayerName };
+module.exports = { addPlayer, removePlayer, getPlayerName };
 
 function addPlayer(id, name) {
   players.push(new Player(id, name));
@@ -16,6 +16,11 @@ function addPlayer(id, name) {
 function getPlayerName(id) {
   const playerIndex = players.findIndex(player => player.id === id)
   return players.slice(playerIndex, playerIndex+1)[0].name
+}
+
+function removePlayer(id) {
+  players.splice(players.findIndex(player => player.id === id), 1)
+  playerListUpdate(players);
 }
 
 function playTurn() {

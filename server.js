@@ -32,6 +32,11 @@ function newConnection(socket) {
     const playerName = game.getPlayerName(socketid);
     io.in(room).emit("chat-message", { playerName, msg });
   });
+
+  socket.on("disconnect", () => {
+    console.log(`${socket.id} disconnected`);
+    game.removePlayer(socket.id);
+  });
 }
 
 function playerListUpdate(playerList) {
