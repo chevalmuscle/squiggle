@@ -10,22 +10,95 @@ socket.on("player-list", newPlayerList);
 socket.on("new-turn", newTurn);
 socket.on("counter", updateCountDown);
 
-socket.on("chat-message", function({ playerName, msg }) {
-  const messageElement = document.createElement("li");
-  messageElement.className = "message-in-chat";
-  messageElement.innerHTML = `<span class="chatter-name">${playerName}: </span><span>${msg}</span></li>`;
-  $("#chat-messages").append(messageElement);
-  $("#chat-messages").scrollTop($("#chat-messages").height());
-});
+// chatting
+socket.on("chat-message", receiveMessage);
+socket.on("close-guess", receivedCloseGuess);
+socket.on("guessed-right", receivedAnswer);
 
 window.onload = function() {
   $("#chat-input-form").submit(function(e) {
     e.preventDefault();
-    socket.emit("chat-message", { socketid: id, msg: $("#chat-input").val() });
+    sendMessageToServer($("#chat-input").val());
     $("#chat-input").val("");
     return false;
   });
 };
+
+/**
+ * Receives the message from the server and displays it in the chatbox
+ * @param {object} {
+ *                   playerid: player's id who sent the message,
+ *                   playerName: player's name who sent the message,
+ *                   message: message received
+ *                 }
+ */
+function receiveMessage({ playerid, playerName, message }) {
+  if (playerid === id) {
+    insertMessageInChat("You", message, "");
+  } else {
+    insertMessageInChat(playerName, message, "");
+  }
+}
+
+/**
+ * Receives an almost correct answer from the server and
+ * displays it in the chatbox for the user who almost guessed right
+ * @param {object} {
+ *                   playerid: player's id who sent the message,
+ *                   message: message received
+ *                 }
+ */
+function receivedCloseGuess({ playerid, message }) {
+  $(`#${playerid}`).addClass("almost-guessed-word");
+
+  if (playerid === id) {
+    insertMessageInChat("You", message, "almost-guessed-word");
+  }
+}
+
+/**
+ * Receives a correct answer from the server and
+ * displays it in the chatbox for the user who guessed right
+ * @param {object} {
+ *                   playerid: player's id who sent the message,
+ *                   playerName: player's name who sent the message,
+ *                   message: message received
+ *                 }
+ */
+function receivedAnswer({ playerid, playerName, message }) {
+  $(`#${playerid}`).addClass("has-guessed-word");
+  canDraw = true;
+
+  if (playerid === id) {
+    insertMessageInChat("You", message, "has-guessed-word");
+  } else {
+    insertMessageInChat("Info", `${playerName} has guessed the word !`, "");
+  }
+}
+
+/**
+ * Writes a message in the chatbox.
+ * Format: `chatterName: message`
+ * @param {string} chatterName Chatter's name of the message
+ * @param {string} message Message sent to the chatbox
+ * @param {string} customClasses Custom css classes added to the li. Must be separated by a space if many
+ */
+function insertMessageInChat(chatterName, message, customClasses) {
+  const messageElement = document.createElement("li");
+  messageElement.className = `message-in-chat ${customClasses}`;
+  messageElement.innerHTML = `<span class="chatter-name">${chatterName}: </span><span>${message}</span>`;
+  $("#chat-messages").append(messageElement);
+  $("#chat-messages").scrollTop($("#chat-messages").height());
+}
+
+/**
+ * Sends a message to the server and
+ * empties the chat input
+ * @param {string} message message sent by the user
+ */
+function sendMessageToServer(message) {
+  socket.emit("chat-message", message);
+}
 
 /**
  *
@@ -97,6 +170,8 @@ function updateCountDown({ timeLeft, totalTime }) {
 function generatePlayerElement(playerid, playerName, playerScore) {
   const playerElement = document.createElement("li");
   playerElement.className = "player";
+
+  playerElement.id = playerid;
 
   if (playerid === id) {
     playerElement.classList.add("is-current-user");

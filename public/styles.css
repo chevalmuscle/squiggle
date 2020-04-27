@@ -27,7 +27,19 @@ h2 {
 }
 
 .is-current-user {
-  color: blue;
+  font-weight: 800;
+}
+
+.almost-guessed-word {
+  color: orange;
+}
+
+.has-guessed-word {
+  color: green;
+}
+
+.player {
+  font-size: 0.9em;
 }
 
 .player-name {

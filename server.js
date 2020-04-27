@@ -28,9 +28,20 @@ function newConnection(socket) {
     socket.broadcast.to(room).emit("mouse", data);
   }
 
-  socket.on("chat-message", ({ socketid, msg }) => {
-    const playerName = game.getPlayerName(socketid);
-    io.in(room).emit("chat-message", { playerName, msg });
+  socket.on("chat-message", message => {
+    const playerName = game.getPlayerName(socket.id);
+    const result = game.checkWordGuessed(socket.id, message);
+
+    if (result === -1) {
+      // user did not guessed the word
+      io.in(room).emit("chat-message", { playerid: socket.id, playerName, message });
+    } else if (result === 0) {
+      // the word guessed is close
+      io.in(room).emit("close-guess", { playerid: socket.id, playerName, message })
+    } else if (result == 1) {
+      // the user guessed the word
+      io.in(room).emit("guessed-right", { playerid: socket.id, playerName, message })
+    }
   });
 
   socket.on("disconnect", () => {
