@@ -1,4 +1,6 @@
 var id;
+var isTheDrawingPlayer = false;
+var guessedTheWord = false;
 var canDraw = false;
 var wordToGuess = "";
 var roomid = window.location.search.split("room=")[1].split("&")[0];
@@ -93,7 +95,7 @@ function receivedAnswer({ playerid, playerName, message }) {
   if (playerid === id) {
     // lets the player draw and add words when
     // he guessed right
-    canDraw = true;
+    guessedTheWord = true;
     $("#word-proposition-container").css("visibility", "visible");
     insertMessageInChat("You", message, "has-guessed-word");
   } else {
@@ -157,15 +159,17 @@ function newTurn({ drawerid, word }) {
   $("#word-proposition-container").css("visibility", "hidden");
 
   this.wordToGuess = word;
+  guessedTheWord = false;
 
   if (drawerid === id) {
-    canDraw = true;
+    isTheDrawingPlayer = true;
     const wordToGuessElement = document.getElementById("word-to-guess");
     wordToGuessElement.textContent = word;
     wordToGuessElement.classList.remove("guess-word");
     wordToGuessElement.classList.add("draw-word");
   } else {
-    canDraw = false;
+    isTheDrawingPlayer = false;
+
     const wordToGuessElement = document.getElementById("word-to-guess");
 
     let wordSections = word.split(" ");
@@ -180,6 +184,8 @@ function newTurn({ drawerid, word }) {
     wordToGuessElement.classList.remove("draw-word");
     wordToGuessElement.classList.add("guess-word");
   }
+
+  $("#chat-input-form :input").prop("disabled", isTheDrawingPlayer);
 }
 
 /**
@@ -191,7 +197,7 @@ function newTurn({ drawerid, word }) {
  */
 function updateCountDown({ timeLeft, totalTime }) {
   if (timeLeft <= 0) {
-    canDraw = true;
+    guessedTheWord = true;
     document.getElementById("word-to-guess").textContent = this.wordToGuess;
   }
   $(".progress-bar").css("width", (timeLeft / totalTime) * 100 + "%");

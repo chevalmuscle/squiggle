@@ -24,7 +24,7 @@ function newDrawing(data) {
 }
 
 function mouseDragged() {
-  if (canDraw === true) {
+  if (isTheDrawingPlayer || guessedTheWord) {
     const data = { px: pmouseX, py: pmouseY, x: mouseX, y: mouseY };
     socket.emit("mouse", data);
 
