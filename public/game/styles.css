@@ -1,29 +1,48 @@
+:root {
+  --game-height: 400px;
+  --sidebar-width: 236px;
+  --sketch-width: 500px;
+}
+
 * {
   margin: 0;
   padding: 0;
 }
 
 #game {
-  height: 400px;
+  height: var(--game-height);
 }
 
 h2 {
   font-size: 1.5em;
 }
 
-.sidebar {
-  width: 236px;
-  height: 400px;
+#right-sidebar {
   position: absolute;
   top: 0;
   left: 0;
-  background-color: #E0E0E0;
+}
+
+#left-sidebar {
+  position: absolute;
+  top: 0;
+  margin-left: calc(var(--sidebar-width) + var(--sketch-width));
+}
+
+.sidebar {
+  width: var(--sidebar-width);
+  height: var(--game-height);
+  background-color: #e0e0e0;
 }
 
 #player-list {
   height: calc(50% - 1.5em - 22px);
   overflow: scroll;
   margin: 0px;
+}
+
+#word-proposition-container {
+  visibility: hidden;
 }
 
 .is-current-user {
@@ -58,15 +77,15 @@ li {
 }
 
 #sketch-holder {
-  margin-left: 236px;
+  margin-left: var(--sidebar-width);
 }
 
 #word-to-guess {
   position: absolute;
   font-size: 1.2em;
-  margin-left: 236px;
+  margin-left: var(--sidebar-width);
   top: 25px;
-  width: 500px;
+  width: var(--sketch-width);
   text-align: center;
 }
 
@@ -86,6 +105,7 @@ li {
   height: 50%;
   bottom: 0px;
 }
+
 #chat-messages {
   height: calc(200px - 2px - 28px);
   overflow: scroll;
@@ -117,7 +137,23 @@ li {
 
 .progress {
   position: absolute;
-  width: 498px;
-  margin-left: 236px;
+  width: calc(var(--sketch-width) - 2px);
+  margin-left: var(--sidebar-width);
   border-radius: 0px !important;
+}
+
+#word-proposition-form {
+  position: absolute;
+  width: 100%;
+  margin: 2px;
+  bottom: 0px;
+}
+
+#proposition-input {
+  width: calc(100% - 34px - 4px);
+}
+
+#add-proposition-button {
+  height: 28px;
+  width: 34px;
 }
