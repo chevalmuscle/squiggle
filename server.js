@@ -10,6 +10,7 @@ const room = 1;
 const port = process.env.PORT || 3000;
 const server = app.listen(port, function() {
   app.use(express.static("public"));
+  app.use("/game", express.static("public/game"))
   console.log(`http://localhost:${port} 🐷`);
 });
 
