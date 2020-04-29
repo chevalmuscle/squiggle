@@ -113,8 +113,7 @@ function insertMessageInChat(chatterName, message, customClasses) {
   const messageElement = document.createElement("li");
   messageElement.className = `message-in-chat ${customClasses}`;
   messageElement.innerHTML = `<span class="chatter-name">${chatterName}: </span><span>${message}</span>`;
-  $("#chat-messages").append(messageElement);
-  $("#chat-messages").scrollTop($("#chat-messages").height());
+  $("#chat-messages").prepend(messageElement);
 }
 
 /**

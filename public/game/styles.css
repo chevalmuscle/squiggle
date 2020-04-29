@@ -106,9 +106,18 @@ li {
   bottom: 0px;
 }
 
-#chat-messages {
+#chat-window {
   height: calc(200px - 2px - 28px);
-  overflow: scroll;
+  display: flex;
+  flex-direction: column;
+}
+
+#chat-messages {
+  flex: 1;
+  height: 100%;
+  overflow: auto;
+  display: flex;
+  flex-direction: column-reverse;
 }
 
 #chat-input-form {
