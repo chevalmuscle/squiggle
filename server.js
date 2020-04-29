@@ -28,13 +28,13 @@ function newConnection(socket) {
   console.log(`New connection: ${socket.id}`);
   let room;
 
-  socket.on("join-room", roomid => {
+  socket.on("join-room", ({ roomid, playerName }) => {
     roomid = roomid.toLowerCase();
     if (games[roomid] === undefined) {
       io.to(socket.id).emit("invalid-room-id", null);
     } else {
       socket.join(roomid);
-      games[roomid].addPlayer(socket.id, socket.id);
+      games[roomid].addPlayer(socket.id, playerName);
       room = roomid;
     }
   });

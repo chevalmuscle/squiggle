@@ -17,7 +17,17 @@ socket.on("close-guess", receivedCloseGuess);
 socket.on("guessed-right", receivedAnswer);
 
 window.onload = function() {
-  socket.emit("join-room", roomid);
+  let playerName = localStorage.getItem("playerName");
+  if (playerName === null) {
+    // the user has not set its username
+    playerName = prompt("What's your name?", "");
+    if (playerName === null || playerName === "") {
+      playerName = "Not the NSA !";
+    }
+    localStorage.setItem("playerName", playerName);
+  }
+
+  socket.emit("join-room", { roomid: roomid, playerName: playerName });
 
   $("#room-id").text(roomid);
 
@@ -79,7 +89,7 @@ function receivedCloseGuess({ playerid, message }) {
  */
 function receivedAnswer({ playerid, playerName, message }) {
   $(`#${playerid}`).addClass("has-guessed-word");
-  
+
   // lets the player draw and add words when
   // he guessed right
   canDraw = true;
@@ -147,7 +157,7 @@ function newPlayerList(playerList) {
 function newTurn({ drawerid, word }) {
   // hides the possibility to propose new words
   $("#word-proposition-container").css("visibility", "hidden");
-  
+
   this.wordToGuess = word;
 
   if (drawerid === id) {
