@@ -35,15 +35,21 @@ window.onload = function() {
 
   $("#chat-input-form").submit(function(e) {
     e.preventDefault();
-    sendMessageToServer($("#chat-input").val());
-    $("#chat-input").val("");
+    const chatMessage = $("#chat-input").val();
+    if (chatMessage !== "") {
+      sendMessageToServer(chatMessage);
+      $("#chat-input").val("");
+    }
     return false;
   });
 
   $("#word-proposition-form").submit(function(e) {
     e.preventDefault();
-    proposeWord($("#proposition-input").val());
-    $("#proposition-input").val("");
+    const proposedWord = $("#proposition-input").val();
+    if (proposedWord !== "") {
+      proposeWord(proposedWord);
+      $("#proposition-input").val("");
+    }
     return false;
   });
 };
