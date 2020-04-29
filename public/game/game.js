@@ -27,6 +27,13 @@ window.onload = function() {
     $("#chat-input").val("");
     return false;
   });
+
+  $("#word-proposition-form").submit(function(e) {
+    e.preventDefault();
+    proposeWord($("#proposition-input").val());
+    $("#proposition-input").val("");
+    return false;
+  });
 };
 
 /**
@@ -72,7 +79,11 @@ function receivedCloseGuess({ playerid, message }) {
  */
 function receivedAnswer({ playerid, playerName, message }) {
   $(`#${playerid}`).addClass("has-guessed-word");
+  
+  // lets the player draw and add words when
+  // he guessed right
   canDraw = true;
+  $("#word-proposition-container").css("visibility", "visible");
 
   if (playerid === id) {
     insertMessageInChat("You", message, "has-guessed-word");
@@ -106,6 +117,14 @@ function sendMessageToServer(message) {
 }
 
 /**
+ * Sends a word to the server to be added into the game's word bank
+ * @param {string} word word to add into the games bank
+ */
+function proposeWord(word) {
+  socket.emit("propose-new-word", word);
+}
+
+/**
  *
  * @param {Array} playerList List of the players playing the game. See Player.js for the object
  */
@@ -126,7 +145,11 @@ function newPlayerList(playerList) {
  * @param {object} { drawerid: id of the player that is drawing, word: word that is being drawn }
  */
 function newTurn({ drawerid, word }) {
+  // hides the possibility to propose new words
+  $("#word-proposition-container").css("visibility", "hidden");
+  
   this.wordToGuess = word;
+
   if (drawerid === id) {
     canDraw = true;
     const wordToGuessElement = document.getElementById("word-to-guess");
@@ -167,7 +190,7 @@ function updateCountDown({ timeLeft, totalTime }) {
 }
 
 /**
- * Fired when the user is going to an invalid room's id. 
+ * Fired when the user is going to an invalid room's id.
  * Sends the user a message to inform him and redirects to the home page
  */
 function invalidRoomid() {

@@ -93,6 +93,23 @@ function newConnection(socket) {
     games[roomid] = new Game(roomid);
     io.to(socket.id).emit("new-room-id", roomid);
   });
+
+  socket.on("propose-new-word", newWord => {
+    const hasBeenAdded = games[room].addWord(newWord);
+
+    let message = "";
+    if (hasBeenAdded) {
+      message = "added a new word";
+    } else {
+      message = "proposed an already existing word";
+    }
+
+    io.in(room).emit("chat-message", {
+      playerid: null,
+      playerName: "server",
+      message: `${games[room].getPlayerName(socket.id)} ${message}`,
+    });
+  });
 }
 
 /**

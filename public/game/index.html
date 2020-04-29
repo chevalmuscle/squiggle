@@ -31,7 +31,7 @@
   </head>
   <body>
     <div id="game">
-      <div class="sidebar">
+      <div id="right-sidebar" class="sidebar">
         <h2 class="room-name">Room <span id="room-id"></span></h2>
         <ol id="player-list">
           <li class="player">
@@ -69,6 +69,26 @@
         <!-- p5.js sketch -->
       </div>
       <div id="word-to-guess"></div>
+      <div id="left-sidebar" class="sidebar">
+        <div id="word-proposition-container">
+          <div>
+            Congratulations ! You guessed the word. You can now have fun and add
+            a many new ones as you want
+          </div>
+          <div>
+            <form id="word-proposition-form" action="">
+              <div>Add a new word to the word bank !</div>
+              <div>
+                <input id="proposition-input" autocomplete="off" /><button
+                  id="add-proposition-button"
+                >
+                  Add
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
     </div>
   </body>
 </html>

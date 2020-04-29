@@ -17,12 +17,21 @@ h2 {
   font-size: 1.5em;
 }
 
-.sidebar {
-  width: var(--sidebar-width);
-  height: var(--game-height);
+#right-sidebar {
   position: absolute;
   top: 0;
   left: 0;
+}
+
+#left-sidebar {
+  position: absolute;
+  top: 0;
+  margin-left: calc(var(--sidebar-width) + var(--sketch-width));
+}
+
+.sidebar {
+  width: var(--sidebar-width);
+  height: var(--game-height);
   background-color: #e0e0e0;
 }
 
@@ -30,6 +39,10 @@ h2 {
   height: calc(50% - 1.5em - 22px);
   overflow: scroll;
   margin: 0px;
+}
+
+#word-proposition-container {
+  visibility: hidden;
 }
 
 .is-current-user {
@@ -127,4 +140,20 @@ li {
   width: calc(var(--sketch-width) - 2px);
   margin-left: var(--sidebar-width);
   border-radius: 0px !important;
+}
+
+#word-proposition-form {
+  position: absolute;
+  width: 100%;
+  margin: 2px;
+  bottom: 0px;
+}
+
+#proposition-input {
+  width: calc(100% - 34px - 4px);
+}
+
+#add-proposition-button {
+  height: 28px;
+  width: 34px;
 }

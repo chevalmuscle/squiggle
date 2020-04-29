@@ -94,6 +94,22 @@ module.exports = class Game {
   }
 
   /**
+   * Adds a word in the words bank if not already present
+   * @param {string} word word to be added in the bank
+   */
+  addWord(word) {
+    word = word.toLowerCase()
+    if (this.words.indexOf(word) !== -1) {
+      // the word is already in the bank
+      // so its not added
+      return false;
+    } else {
+      this.words.push(word);
+      return true;
+    }
+  }
+
+  /**
    * Plays the next turn 
    * 
    * Updates the score, send an update on the players list, 
