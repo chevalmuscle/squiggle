@@ -2,7 +2,7 @@ const Player = require("./Player");
 const { playerListUpdate, turnUpdate } = require("./server");
 
 module.exports = class Game {
-  constructor(roomid) {
+  constructor(roomid, turnLength, words) {
     this.roomid = roomid;
 
     /**
@@ -19,7 +19,7 @@ module.exports = class Game {
     /**
      * Words that can be used during the game
      */
-    this.words = ["apples and oranges", "banana", "cat", "flash mcqueen"];
+    this.words = words;
 
     /**
      * Word that is being drawn in the current turn
@@ -37,7 +37,7 @@ module.exports = class Game {
     /**
      * Time per turn in ms
      */
-    this.TURN_LENGTH = 10000;
+    this.TURN_LENGTH = turnLength;
 
     /**
      * Pause between turns in ms
