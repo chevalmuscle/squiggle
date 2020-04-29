@@ -1,5 +1,5 @@
 var words = ["cat", "orange", "fish", "bulldozer"];
-var turnLength = 30;
+var turnLength = 90;
 var socket = io.connect();
 
 socket.on("new-room-id", newRoomid);
