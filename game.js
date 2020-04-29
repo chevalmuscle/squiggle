@@ -48,11 +48,16 @@ module.exports = class Game {
     var self = this;
 
     // auto plays turn
-    setInterval(function() {
+    setTimeout(function() {
       if (self.players.length > 0) {
         self.playTurn();
       }
-    }, self.TURN_LENGTH + self.TIME_BETWEEN_TURNS);
+      setInterval(function() {
+        if (self.players.length > 0) {
+          self.playTurn();
+        }
+      }, self.TURN_LENGTH + self.TIME_BETWEEN_TURNS);
+    }, self.TIME_BETWEEN_TURNS);
   }
 
   /**

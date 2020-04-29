@@ -1,5 +1,5 @@
 var words = ["cat", "orange", "fish", "bulldozer"];
-var turnLength = 30;
+var turnLength = 90;
 var socket = io.connect();
 
 socket.on("new-room-id", newRoomid);
@@ -23,10 +23,12 @@ window.onload = function() {
 
   $("#add-word-button").click(function(e) {
     const newWord = $("#add-word-input").val();
-    self.words.push(newWord);
-    $("#add-word-input").val("");
+    if (newWord !== "") {
+      self.words.push(newWord);
+      $("#add-word-input").val("");
 
-    updateWordListElement();
+      updateWordListElement();
+    }
     return false;
   });
 
