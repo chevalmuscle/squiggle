@@ -1,13 +1,14 @@
 var id;
 var canDraw = false;
 var wordToGuess = "";
-var socket;
-socket = io.connect();
+var roomid = window.location.search.split("room=")[1].split("&")[0];
+var socket = io.connect();
 
 socket.on("connect", () => (id = socket.id));
 
 socket.on("player-list", newPlayerList);
 socket.on("new-turn", newTurn);
+socket.on("invalid-room-id", invalidRoomid);
 socket.on("counter", updateCountDown);
 
 // chatting
@@ -16,6 +17,10 @@ socket.on("close-guess", receivedCloseGuess);
 socket.on("guessed-right", receivedAnswer);
 
 window.onload = function() {
+  socket.emit("join-room", roomid);
+
+  $("#room-id").text(roomid);
+
   $("#chat-input-form").submit(function(e) {
     e.preventDefault();
     sendMessageToServer($("#chat-input").val());
@@ -159,6 +164,15 @@ function updateCountDown({ timeLeft, totalTime }) {
     document.getElementById("word-to-guess").textContent = this.wordToGuess;
   }
   $(".progress-bar").css("width", (timeLeft / totalTime) * 100 + "%");
+}
+
+/**
+ * Fired when the user is going to an invalid room's id. 
+ * Sends the user a message to inform him and redirects to the home page
+ */
+function invalidRoomid() {
+  alert("This room doesn't exist. You need to create one before.");
+  window.location.href = "/";
 }
 
 /**
