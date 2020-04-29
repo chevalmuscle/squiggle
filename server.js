@@ -88,9 +88,13 @@ function newConnection(socket) {
     }
   });
 
-  socket.on("request-new-room", () => {
+  socket.on("request-new-room", gameData => {
     const roomid = generateRoomid(ROOM_ID_LENGTH);
-    games[roomid] = new Game(roomid);
+    games[roomid] = new Game(
+      roomid,
+      gameData.turnLength * 1000,
+      gameData.words,
+    );
     io.to(socket.id).emit("new-room-id", roomid);
   });
 
