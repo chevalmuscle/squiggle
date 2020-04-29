@@ -90,12 +90,11 @@ function receivedCloseGuess({ playerid, message }) {
 function receivedAnswer({ playerid, playerName, message }) {
   $(`#${playerid}`).addClass("has-guessed-word");
 
-  // lets the player draw and add words when
-  // he guessed right
-  canDraw = true;
-  $("#word-proposition-container").css("visibility", "visible");
-
   if (playerid === id) {
+    // lets the player draw and add words when
+    // he guessed right
+    canDraw = true;
+    $("#word-proposition-container").css("visibility", "visible");
     insertMessageInChat("You", message, "has-guessed-word");
   } else {
     insertMessageInChat("Info", `${playerName} has guessed the word !`, "");
