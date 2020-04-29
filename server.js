@@ -8,6 +8,11 @@ const app = express();
 const games = {};
 const ROOM_ID_LENGTH = 5;
 
+/**
+ * Delay before an empty game gets deleted (in ms)
+ */
+const GAME_DELETION_DELAY = 5 * 60 * 1000;
+
 const port = process.env.PORT || 3000;
 const server = app.listen(port, function() {
   app.use(express.static("public"));
@@ -24,12 +29,14 @@ function newConnection(socket) {
   let room;
 
   socket.on("join-room", roomid => {
-    room = roomid.toLowerCase();
-    if (games[room] === undefined) {
-      games[room] = new Game(room);
+    roomid = roomid.toLowerCase();
+    if (games[roomid] === undefined) {
+      io.to(socket.id).emit("invalid-room-id", null);
+    } else {
+      socket.join(roomid);
+      games[roomid].addPlayer(socket.id, socket.id);
+      room = roomid;
     }
-    socket.join(room);
-    games[room].addPlayer(socket.id, socket.id);
   });
 
   socket.on("mouse", mouseDrawingData => {
@@ -68,14 +75,22 @@ function newConnection(socket) {
     console.log(`${socket.id} disconnected`);
     if (room !== undefined) {
       games[room].removePlayer(socket.id);
+
       if (games[room].isEmpty()) {
-        delete games[room];
+        // adds a delay before deleting the game
+        setTimeout(function() {
+          if (games[room].isEmpty()) {
+            delete games[room];
+            console.log("Purged game with room " + room);
+          }
+        }, GAME_DELETION_DELAY);
       }
     }
   });
 
   socket.on("request-new-room", () => {
     const roomid = generateRoomid(ROOM_ID_LENGTH);
+    games[roomid] = new Game(roomid);
     io.to(socket.id).emit("new-room-id", roomid);
   });
 }

@@ -8,6 +8,7 @@ socket.on("connect", () => (id = socket.id));
 
 socket.on("player-list", newPlayerList);
 socket.on("new-turn", newTurn);
+socket.on("invalid-room-id", invalidRoomid);
 socket.on("counter", updateCountDown);
 
 // chatting
@@ -163,6 +164,15 @@ function updateCountDown({ timeLeft, totalTime }) {
     document.getElementById("word-to-guess").textContent = this.wordToGuess;
   }
   $(".progress-bar").css("width", (timeLeft / totalTime) * 100 + "%");
+}
+
+/**
+ * Fired when the user is going to an invalid room's id. 
+ * Sends the user a message to inform him and redirects to the home page
+ */
+function invalidRoomid() {
+  alert("This room doesn't exist. You need to create one before.");
+  window.location.href = "/";
 }
 
 /**
