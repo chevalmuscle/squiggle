@@ -1,8 +1,8 @@
 var id;
 var canDraw = false;
 var wordToGuess = "";
-var socket;
-socket = io.connect();
+var roomid = window.location.search.split("room=")[1].split("&")[0];
+var socket = io.connect();
 
 socket.on("connect", () => (id = socket.id));
 
@@ -16,6 +16,10 @@ socket.on("close-guess", receivedCloseGuess);
 socket.on("guessed-right", receivedAnswer);
 
 window.onload = function() {
+  socket.emit("join-room", roomid);
+
+  $("#room-id").text(roomid);
+
   $("#chat-input-form").submit(function(e) {
     e.preventDefault();
     sendMessageToServer($("#chat-input").val());
