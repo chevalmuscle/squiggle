@@ -4,23 +4,23 @@ const { playerListUpdate, turnUpdate } = require("./server");
 module.exports = class Game {
   constructor(roomid) {
     this.roomid = roomid;
-    
+
     /**
      * List of the players in the game
      */
     this.players = [];
-    
+
     /**
-     * Index of the current player that is drawing 
+     * Index of the current player that is drawing
      * in the players array
      */
     this.currentPlayerIndex = 0;
-    
+
     /**
      * Words that can be used during the game
      */
     this.words = ["apples and oranges", "banana", "cat", "flash mcqueen"];
-    
+
     /**
      * Word that is being drawn in the current turn
      */
@@ -110,11 +110,11 @@ module.exports = class Game {
   }
 
   /**
-   * Plays the next turn 
-   * 
-   * Updates the score, send an update on the players list, 
-   * generates a new word and sends the turn's informations to the server. 
-   * 
+   * Plays the next turn
+   *
+   * Updates the score, send an update on the players list,
+   * generates a new word and sends the turn's informations to the server.
+   *
    * Sets the next player to play after the information is sent.
    */
   playTurn() {
@@ -123,16 +123,16 @@ module.exports = class Game {
 
     this.wordToDraw = this.getRandomWord();
 
+    // sets next player
+    if (++this.currentPlayerIndex > this.players.length - 1)
+      this.currentPlayerIndex = 0;
+
     turnUpdate(
       this.roomid,
       this.players[this.currentPlayerIndex].id,
       this.wordToDraw,
       this.TURN_LENGTH,
     );
-
-    // sets next player
-    if (++this.currentPlayerIndex > this.players.length - 1)
-      this.currentPlayerIndex = 0;
   }
 
   /**
