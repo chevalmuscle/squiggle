@@ -1,10 +1,16 @@
+:root {
+  --game-height: 400px;
+  --sidebar-width: 236px;
+  --sketch-width: 500px;
+}
+
 * {
   margin: 0;
   padding: 0;
 }
 
 #game {
-  height: 400px;
+  height: var(--game-height);
 }
 
 h2 {
@@ -12,12 +18,12 @@ h2 {
 }
 
 .sidebar {
-  width: 236px;
-  height: 400px;
+  width: var(--sidebar-width);
+  height: var(--game-height);
   position: absolute;
   top: 0;
   left: 0;
-  background-color: #E0E0E0;
+  background-color: #e0e0e0;
 }
 
 #player-list {
@@ -58,15 +64,15 @@ li {
 }
 
 #sketch-holder {
-  margin-left: 236px;
+  margin-left: var(--sidebar-width);
 }
 
 #word-to-guess {
   position: absolute;
   font-size: 1.2em;
-  margin-left: 236px;
+  margin-left: var(--sidebar-width);
   top: 25px;
-  width: 500px;
+  width: var(--sketch-width);
   text-align: center;
 }
 
@@ -86,6 +92,7 @@ li {
   height: 50%;
   bottom: 0px;
 }
+
 #chat-messages {
   height: calc(200px - 2px - 28px);
   overflow: scroll;
@@ -117,7 +124,7 @@ li {
 
 .progress {
   position: absolute;
-  width: 498px;
-  margin-left: 236px;
+  width: calc(var(--sketch-width) - 2px);
+  margin-left: var(--sidebar-width);
   border-radius: 0px !important;
 }
