@@ -71,10 +71,8 @@ function newConnection(socket) {
       });
       
       if (games[room].hasEveryPlayerFoundTheWord()) {
-        io.in(room).emit("chat-message", {
-          playerid: null,
-          playerName: "server",
-          message: `Everyone guessed the word ! A new round with begin`,
+        io.in(room).emit("server-message", {
+          message: `Everyone guessed the word ! A new round with start shortly`,
         });
         clearInterval(turnCountDownInterval);
         games[room].startNewTurn();
@@ -119,9 +117,7 @@ function newConnection(socket) {
       message = "proposed an already existing word";
     }
 
-    io.in(room).emit("chat-message", {
-      playerid: null,
-      playerName: "server",
+    io.in(room).emit("server-message", {
       message: `${games[room].getPlayerName(socket.id)} ${message}`,
     });
   });

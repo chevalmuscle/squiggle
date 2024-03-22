@@ -15,6 +15,7 @@ socket.on("counter", updateCountDown);
 
 // chatting
 socket.on("chat-message", receiveMessage);
+socket.on("server-message", receiveServerMessage);
 socket.on("close-guess", receivedCloseGuess);
 socket.on("guessed-right", receivedAnswer);
 
@@ -68,6 +69,15 @@ function receiveMessage({ playerid, playerName, message }) {
   } else {
     insertMessageInChat(playerName, message, "");
   }
+}
+
+function receiveServerMessage({ message }) {
+  insertMessageInChat("server", message, "");
+  document.getElementById("server-message").textContent = message;
+
+  setTimeout(() => {
+    document.getElementById("server-message").textContent = "";
+  }, 3000);
 }
 
 /**

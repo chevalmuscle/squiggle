@@ -89,6 +89,16 @@ li {
   text-align: center;
 }
 
+#server-message {
+  position: absolute;
+  font-size: 1em;
+  color: blue;
+  margin-left: var(--sidebar-width);
+  top: 50px;
+  width: var(--sketch-width);
+  text-align: center;
+}
+
 .draw-word {
   color: green;
 }
