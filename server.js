@@ -7,6 +7,7 @@ const Game = require("./game");
 const app = express();
 const games = {};
 const ROOM_ID_LENGTH = 5;
+let turnCountDownInterval;
 
 /**
  * Delay before an empty game gets deleted (in ms)
@@ -68,6 +69,16 @@ function newConnection(socket) {
         playerName,
         message,
       });
+      
+      if (games[room].hasEveryPlayerFoundTheWord()) {
+        io.in(room).emit("chat-message", {
+          playerid: null,
+          playerName: "server",
+          message: `Everyone guessed the word ! A new round with begin`,
+        });
+        clearInterval(turnCountDownInterval);
+        games[room].startNewTurn();
+      }
     }
   });
 
@@ -147,14 +158,14 @@ function turnUpdate(roomid, drawerid, word, turnLength) {
   io.in(roomid).emit("new-turn", { drawerid, word });
 
   let timeLeft = turnLength;
-  var turnCountDown = setInterval(function() {
+  turnCountDownInterval = setInterval(function() {
     io.in(roomid).emit("counter", {
       timeLeft: timeLeft,
       totalTime: turnLength,
     });
     timeLeft -= 1000;
     if (timeLeft < 0) {
-      clearInterval(turnCountDown);
+      clearInterval(turnCountDownInterval);
     }
   }, 1000);
 }

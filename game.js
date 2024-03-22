@@ -44,20 +44,10 @@ module.exports = class Game {
      */
     this.TIME_BETWEEN_TURNS = 5000;
 
-    // to use this in the setInterval
-    var self = this;
+    this.turnInterval = undefined;
 
     // auto plays turn
-    setTimeout(function() {
-      if (self.players.length > 0) {
-        self.playTurn();
-      }
-      setInterval(function() {
-        if (self.players.length > 0) {
-          self.playTurn();
-        }
-      }, self.TURN_LENGTH + self.TIME_BETWEEN_TURNS);
-    }, self.TIME_BETWEEN_TURNS);
+    this.startNewTurn();
   }
 
   /**
@@ -114,6 +104,20 @@ module.exports = class Game {
     }
   }
 
+  startNewTurn() {
+      if (this.turnInterval) {
+        clearInterval(this.turnInterval);
+      }
+
+      setTimeout(() => {
+        this.playNextTurn();
+
+        this.turnInterval = setInterval(() => {
+          this.startNextTurn();
+        }, this.TURN_LENGTH + this.TIME_BETWEEN_TURNS);
+      }, this.TIME_BETWEEN_TURNS);
+
+  }
   /**
    * Plays the next turn
    *
@@ -122,7 +126,10 @@ module.exports = class Game {
    *
    * Sets the next player to play after the information is sent.
    */
-  playTurn() {
+  playNextTurn() {
+    if (this.players.length == 0) {
+        return;
+    }
     this.updateScores();
     playerListUpdate(this.roomid, this.players);
 
@@ -180,6 +187,10 @@ module.exports = class Game {
       ].hasFoundWord = true;
       return 1;
     }
+  }
+
+  hasEveryPlayerFoundTheWord() {
+    return this.players.every((player, index) => player.hasFoundWord || this.currentPlayerIndex === index);
   }
 
   /**
