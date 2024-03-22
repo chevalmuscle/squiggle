@@ -2,6 +2,10 @@
 
 Goal: A game where you and your friends submit words and then have to guess them by drawing them. With the help of p5.js, socket.io, nodejs.
 
+## Requirements
+
+- node 20 or [nix](https://nixos.org) to load dependencies from `shell.nix`
+
 ## Installation
 
 0. Install node & npm
