@@ -88,7 +88,7 @@ function newConnection(socket) {
       if (games[room].isEmpty()) {
         // adds a delay before deleting the game
         setTimeout(function() {
-          if (games[room].isEmpty()) {
+          if (room in games && games[room].isEmpty()) {
             delete games[room];
             console.log("Purged game with room " + room);
           }
