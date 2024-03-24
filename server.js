@@ -76,7 +76,7 @@ function newConnection(socket) {
         playerName,
         message,
       });
-      
+
       if (games[room].hasEveryPlayerFoundTheWord()) {
         io.in(room).emit("server-message", {
           message: `Everyone guessed the word ! A new round with start shortly`,
@@ -96,6 +96,7 @@ function newConnection(socket) {
         // adds a delay before deleting the game
         setTimeout(function() {
           if (room in games && games[room].isEmpty()) {
+            games[room].cleanResources();
             delete games[room];
             console.log("Purged game with room " + room);
           }

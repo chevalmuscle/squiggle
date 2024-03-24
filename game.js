@@ -57,6 +57,12 @@ module.exports = class Game {
     return this.players.length === 0;
   }
 
+  cleanResources() {
+    if (this.turnInterval) {
+      clearInterval(this.turnInterval);
+    }
+  }
+
   /**
    * Return player's name by id
    * @param {string} id id of the player
