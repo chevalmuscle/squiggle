@@ -113,8 +113,8 @@ module.exports = class Game {
         this.playNextTurn();
 
         this.turnInterval = setInterval(() => {
-          this.startNextTurn();
-        }, this.TURN_LENGTH + this.TIME_BETWEEN_TURNS);
+          this.startNewTurn();
+        }, this.TURN_LENGTH);
       }, this.TIME_BETWEEN_TURNS);
 
   }
