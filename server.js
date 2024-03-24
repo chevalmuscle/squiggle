@@ -1,5 +1,12 @@
 module.exports = { playerListUpdate, turnUpdate };
 
+console.logCopy = console.log.bind(console);
+
+console.log = function(data) {
+  const currentDate = '[' + new Date().toUTCString() + '] ';
+  this.logCopy(currentDate, data);
+};
+
 const express = require("express");
 const socket = require("socket.io");
 const Game = require("./game");
