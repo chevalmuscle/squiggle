@@ -78,6 +78,7 @@ li {
 
 #sketch-holder {
   margin-left: var(--sidebar-width);
+  touch-action: none;
 }
 
 #word-to-guess {
