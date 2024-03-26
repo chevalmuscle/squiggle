@@ -1,7 +1,7 @@
 {
-  "name": "drawing-game",
+  "name": "squiggle",
   "version": "1.0.0",
-  "description": "a simple drawing game where you challenge your friends to guess your drawings",
+  "description": "A simple drawing game where you challenge your friends to guess your drawings",
   "main": "server.js",
   "directories": {
     "lib": "lib"

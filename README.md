@@ -1,8 +1,18 @@
-# Drawing Game
+# Squiggle
 
 Goal: A game where you and your friends submit words and then have to guess them by drawing them one by one.
 
 Built with the help of p5.js, socket.io, nodejs.
+
+## Definition of Squiggle
+
+> squiggle *noun*
+>
+> /ˈskwɪɡl/
+>
+> a line, for example in somebody’s handwriting, that is drawn or written in a careless way with curves and waves in it
+>
+> https://www.oxfordlearnersdictionaries.com/definition/english/squiggle?q=squiggle
 
 ## Features
 
