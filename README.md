@@ -33,7 +33,7 @@ Built with the help of p5.js, socket.io, nodejs.
 
 0. Install node & npm
 1. Clone the repo
-2. `npm install`
+2. `npm ci`
 
 ## Run
 
