@@ -2,6 +2,12 @@ const Player = require("./Player");
 const { playerListUpdate, turnUpdate } = require("./server");
 
 module.exports = class Game {
+
+    /**
+        * @param {string} roomid
+        * @param {number} turnLength Time per turn in ms
+        * @param {Array<string>} words List of initial words
+    */
     constructor(roomid, turnLength, words) {
         this.roomid = roomid;
 
@@ -17,9 +23,16 @@ module.exports = class Game {
         this.currentPlayerIndex = 0;
 
         /**
-         * Words that can be used during the game
-         */
+            * Words that can be used during the game
+            * @type {Array<string>}
+        */
         this.words = words;
+
+        /**
+            * Words that have already been drawned
+            * @type {Array<string>}
+        */
+        this.drawnWords = [];
 
         /**
          * Word that is being drawn in the current turn
@@ -139,7 +152,7 @@ module.exports = class Game {
         this.updateScores();
         playerListUpdate(this.roomid, this.players);
 
-        this.wordToDraw = this.getRandomWord();
+        this.wordToDraw = this.getAndRemoveNextWord();
 
         // sets next player
         if (++this.currentPlayerIndex > this.players.length - 1)
@@ -156,8 +169,18 @@ module.exports = class Game {
     /**
      * Returns a random words from the list of words in the game
      */
-    getRandomWord() {
-        return this.words[Math.floor(Math.random() * this.words.length)];
+    getAndRemoveNextWord() {
+        if (this.words.length == 0) {
+            // in case there is not enough words in the bank
+            return this.drawnWords[Math.floor(Math.random() * this.drawnWords.length)];
+        }
+
+        const index = Math.floor(Math.random() * this.words.length);
+        const word = this.words[index];
+        this.words.splice(index, 1);
+
+        this.drawnWords.push(word);
+        return word;
     }
 
     /**
