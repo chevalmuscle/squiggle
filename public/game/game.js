@@ -177,6 +177,11 @@ function newTurn({ drawerid, word }) {
     this.wordToGuess = word;
     guessedTheWord = false;
 
+    for (let drawingIndicator of document.getElementsByName("player-drawing-indicator")) {
+        drawingIndicator.style.visibility = "hidden";
+    }
+    document.getElementById(`${drawerid}-drawing-indicator`).style.visibility = "visible";
+
     if (drawerid === id) {
         isTheDrawingPlayer = true;
         const wordToGuessElement = document.getElementById("word-to-guess");
@@ -252,6 +257,11 @@ function generatePlayerElement(playerid, playerName, playerScore) {
     playerScoreElement.className = "player-score";
     playerScoreElement.textContent = playerScore;
 
-    playerElement.append(playerNameElement, playerScoreElement);
+    const playerIsDrawingElement = document.createElement("span");
+    playerIsDrawingElement.className = "player-drawing-indicator";
+    playerIsDrawingElement.textContent = "🎨";
+    playerIsDrawingElement.id = `${playerid}-drawing-indicator`
+
+    playerElement.append(playerNameElement, playerScoreElement, playerIsDrawingElement);
     return playerElement;
 }

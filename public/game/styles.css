@@ -63,13 +63,16 @@ h2 {
 
 .player-name {
   float: left;
-  width: 200px;
 }
 
 .player-score {
   float: right;
   text-align: end;
-  width: 36px;
+}
+
+.player-drawing-indicator {
+    margin: 0 4px;
+    visibility: hidden;
 }
 
 li {
