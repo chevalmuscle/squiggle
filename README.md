@@ -12,7 +12,7 @@ Built with the help of p5.js, socket.io, nodejs.
 >
 > a line, for example in somebody’s handwriting, that is drawn or written in a careless way with curves and waves in it
 >
-> https://www.oxfordlearnersdictionaries.com/definition/english/squiggle?q=squiggle
+> https://www.oxfordlearnersdictionaries.com/definition/english/squiggle
 
 ## Features
 
