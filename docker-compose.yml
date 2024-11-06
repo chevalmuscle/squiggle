@@ -1,8 +1,6 @@
 services:
   node:
-    image: "node:20"
-    user: "node"
-    working_dir: /home/node/app
+    build: .
     environment:
       - NODE_ENV=production
       - PORT=3000
@@ -10,4 +8,3 @@ services:
       - ./:/home/node/app
     ports:
       - "3000:3000"
-    command: "npm start"
