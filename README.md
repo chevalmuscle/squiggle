@@ -2,7 +2,7 @@
 
 Goal: A game where you and your friends submit words and then have to guess them by drawing them one by one.
 
-Built with the help of p5.js, socket.io, nodejs.
+Built with the help of p5.js, socket.io and nodejs.
 
 ## Definition of Squiggle
 
@@ -25,19 +25,22 @@ Built with the help of p5.js, socket.io, nodejs.
 - Chaos
 - Unexpected and unplanned new "features"
 
-## Requirements
+## Install & Run
 
-- node 20 or [nix](https://nixos.org) to load dependencies from `shell.nix`
+### With docker
 
-## Installation
+Requirement: [docker](https://www.docker.com)
 
-0. Install node & npm
-1. Clone the repo
-2. `npm ci`
+1. `docker compose up` or `make run:docker`
+2. Open the url on the port printed in the console
 
-## Run
+### Using node directly
 
-`npm start` and open the localhost url printed in the console
+Requirement: [node 20](https://nodejs.org/fr/blog/release/v20.9.0)
+
+1. `npm ci` or `make install`
+2. `npm start` or `make run`
+3. Open the url on the port printed in the console
 
 ## Tools used
 
